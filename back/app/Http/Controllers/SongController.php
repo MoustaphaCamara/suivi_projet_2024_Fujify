@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Song;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class SongController extends Controller
@@ -10,17 +11,9 @@ class SongController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Collection
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Song::all();
     }
 
     /**
@@ -28,7 +21,16 @@ class SongController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $artists = [1, 4, 7];
+
+        $song = new Song();
+        $song->title = $request->title;
+        $song->duration = $request->duration;
+        $song->description = $request->description;
+        $song->save();
+
+        $song->artists()->attach($artists);
+        return response()->json(['success' => true, 'song' => $song]);
     }
 
     /**
