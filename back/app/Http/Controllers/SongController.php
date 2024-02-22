@@ -4,64 +4,46 @@ namespace App\Http\Controllers;
 
 use App\Models\Song;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class SongController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(): Collection
     {
         return Song::all();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        $artists = [1, 4, 7];
 
-        $song = new Song();
-        $song->title = $request->title;
-        $song->duration = $request->duration;
-        $song->description = $request->description;
-        $song->save();
-
-        $song->artists()->attach($artists);
+        $song = Song::create([
+            'title' => $request->title,
+            'duration'=>$request->duration,
+            'description' => $request->description,
+            'artist_id' => 1,
+        ]);
         return response()->json(['success' => true, 'song' => $song]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Song $song)
+    public function show(string $id): JsonResponse
     {
-        //
+        $song = Song::find($id);
+        return response()->json($song);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Song $song)
+    public function update(Request $request, string $id): JsonResponse
     {
-        //
+        $song = Song::find($id);
+        $song->update($request->all());
+        return response()->json($song);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Song $song)
+    public function destroy(string $id): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Song $song)
-    {
-        //
+        $song = Song::find($id);
+        $song->delete();
+        return response()->json(null, 204);
     }
 }
