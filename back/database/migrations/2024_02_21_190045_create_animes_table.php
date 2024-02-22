@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('animes', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('category');
+            $table->text('description');
+            $table->string('cover_image');
             $table->timestamps();
         });
     }

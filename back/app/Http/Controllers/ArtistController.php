@@ -3,63 +3,46 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artist;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ArtistController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): Collection
     {
-        //
+        return Artist::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(Request $request): JsonResponse
     {
-        //
+        $artist = Artist::create([
+            'name' => $request->title,
+            'alias'=>$request->duration,
+            'birth_date' => $request->description,
+            'label' => $request->label,
+        ]);
+        return response()->json($artist, Response::HTTP_CREATED);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function show(string $id)
     {
-        //
+        $artist = Artist::find($id);
+        return response()->json($artist);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Artist $artist)
+    public function update(Request $request, string $id): JsonResponse
     {
-        //
+        $artist = Artist::find($id);
+        $artist->update($request->all());
+        return response()->json($artist);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Artist $artist)
+    public function destroy(string $id): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Artist $artist)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Artist $artist)
-    {
-        //
+        $artist = Artist::find($id);
+        $artist->delete();
+        return response()->json(null, 204);
     }
 }

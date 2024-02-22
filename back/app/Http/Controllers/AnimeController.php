@@ -10,35 +10,28 @@ use Illuminate\Http\Response;
 
 class AnimeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): Collection
     {
         return Anime::all();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request): JsonResponse
     {
-        $anime = Anime::create($request->all());
+        $anime = Anime::create([
+            'title' => $request->title,
+            'category'=>$request->category,
+            'description'=>$request->description,
+            'cover_image'=>$request->cover_image,
+        ]);
         return response()->json($anime, Response::HTTP_CREATED);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id): JsonResponse
     {
         $anime = Anime::find($id);
         return response()->json($anime);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id): JsonResponse
     {
         $anime = Anime::find($id);
@@ -46,9 +39,6 @@ class AnimeController extends Controller
         return response()->json($anime);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id): JsonResponse
     {
         $anime = Anime::find($id);
