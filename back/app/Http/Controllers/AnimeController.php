@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AnimeRequest;
 use App\Models\Anime;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
@@ -15,7 +16,7 @@ class AnimeController extends Controller
         return Anime::all();
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(AnimeRequest $request): JsonResponse
     {
         $anime = Anime::create([
             'title' => $request->title,
@@ -32,7 +33,7 @@ class AnimeController extends Controller
         return response()->json($anime);
     }
 
-    public function update(Request $request, string $id): JsonResponse
+    public function update(AnimeRequest $request, string $id): JsonResponse
     {
         $anime = Anime::find($id);
         $anime->update($request->all());
