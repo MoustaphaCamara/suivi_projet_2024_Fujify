@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlbumCoverController;
 use App\Http\Controllers\AnimeController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\SongController;
@@ -24,3 +25,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('animes', AnimeController::class);
 Route::apiResource('artists', ArtistController::class);
 Route::apiResource('songs', SongController::class);
+Route::apiResource('album-covers', AlbumCoverController::class);
