@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SongRequest;
 use App\Models\Song;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
@@ -33,7 +34,7 @@ class SongController extends Controller
         return response()->json($song);
     }
 
-    public function update(Request $request, string $id): JsonResponse
+    public function update(SongRequest $request, string $id): JsonResponse
     {
         $song = Song::find($id);
         $song->update($request->all());

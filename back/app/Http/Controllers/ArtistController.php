@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArtistRequest;
 use App\Models\Artist;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
@@ -32,7 +33,7 @@ class ArtistController extends Controller
         return response()->json($artist);
     }
 
-    public function update(Request $request, string $id): JsonResponse
+    public function update(ArtistRequest $request, string $id): JsonResponse
     {
         $artist = Artist::find($id);
         $artist->update($request->all());
