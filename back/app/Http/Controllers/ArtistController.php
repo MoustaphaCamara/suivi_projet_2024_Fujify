@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArtistRequest;
 use App\Models\Artist;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
@@ -17,11 +18,12 @@ class ArtistController extends Controller
 
     public function store(Request $request): JsonResponse
     {
+        $data = $request->safe()->toArray();
         $artist = Artist::create([
-            'name' => $request->title,
-            'alias'=>$request->duration,
-            'birth_date' => $request->description,
-            'label' => $request->label,
+            'name' =>$data['title'],
+            'alias'=>$data['duration'],
+            'birth_date' =>$data['description'],
+            'label' =>$data['label'],
         ]);
         return response()->json($artist, Response::HTTP_CREATED);
     }
@@ -32,10 +34,12 @@ class ArtistController extends Controller
         return response()->json($artist);
     }
 
-    public function update(Request $request, string $id): JsonResponse
+    public function update(ArtistRequest $request, string $id): JsonResponse
     {
+        $data = $request->validated();
+
         $artist = Artist::find($id);
-        $artist->update($request->all());
+        $artist->update($data);
         return response()->json($artist);
     }
 
