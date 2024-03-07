@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlbumCoverController;
 use App\Http\Controllers\AnimeController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\SongController;
@@ -36,3 +37,4 @@ Route::controller(LoginRegisterController::class)->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [LoginRegisterController::class, 'logout']);
 });
+Route::get('/create-cache', [Controller::class, 'cache']);
