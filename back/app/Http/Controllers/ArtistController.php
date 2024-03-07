@@ -45,18 +45,18 @@ class ArtistController extends Controller
     }
 
 
-    public function getArtisDetails($artisId)
+    public function getArtisDetails($artistId): JsonResponse
     {
-        $cacheKey = "artis_details_{$artisId}";
+        $cacheKey = "artist_details_{$artistId}";
 
-        $artisDetails = Cache::get($cacheKey);
+        $artistDetails = Cache::get($cacheKey);
 
-        if ($artisDetails === null) {
-            $artisDetails = Artist::find($artisId);
-            Cache::put($cacheKey, $artisDetails, $minutes = 60);
+        if ($artistDetails === null) {
+            $artistDetails = Artist::find($artistId);
+            Cache::put($cacheKey, $artistDetails, $minutes = 60);
         }
 
-        return response()->json($artisDetails);
+        return response()->json($artistDetails);
     }
 
 

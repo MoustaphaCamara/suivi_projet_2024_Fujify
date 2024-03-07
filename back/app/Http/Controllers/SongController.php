@@ -45,7 +45,7 @@ class SongController extends Controller
         return response()->json($song);
     }
 
-    public function getSongDetails($songId)
+    public function getSongDetails($songId): JsonResponse
     {
         $cacheKey = "song_details_{$songId}";
 

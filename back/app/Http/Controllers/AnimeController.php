@@ -47,7 +47,7 @@ class AnimeController extends Controller
     }
 
 
-    public function getArtisDetails($animeId)
+    public function getArtistDetails($animeId): JsonResponse
     {
         $cacheKey = "anime_details_{$animeId}";
 
