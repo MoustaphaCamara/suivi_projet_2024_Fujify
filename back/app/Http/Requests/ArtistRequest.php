@@ -6,35 +6,21 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ArtistRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => ['required', 'string', 'max:255'],
             'alias' => ['nullable', 'string', 'max:255'],
-            'birth_date' => ['nullable', 'date_format:Y-m-d'],
+            'birth_date' => ['nullable', 'date'],
             'label' => ['nullable', 'string', 'max:255'],
         ];
     }
 
-    /**
-     * Get custom attributes for validator errors.
-     *
-     * @return array
-     */
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'name' => 'Name',
