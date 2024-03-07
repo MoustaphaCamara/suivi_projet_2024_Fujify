@@ -18,11 +18,12 @@ class ArtistController extends Controller
 
     public function store(Request $request): JsonResponse
     {
+        $data = $request->safe()->toArray();
         $artist = Artist::create([
-            'name' => $request->title,
-            'alias'=>$request->duration,
-            'birth_date' => $request->description,
-            'label' => $request->label,
+            'name' =>$data['title'],
+            'alias'=>$data['duration'],
+            'birth_date' =>$data['description'],
+            'label' =>$data['label'],
         ]);
         return response()->json($artist, Response::HTTP_CREATED);
     }
@@ -35,8 +36,10 @@ class ArtistController extends Controller
 
     public function update(ArtistRequest $request, string $id): JsonResponse
     {
+        $data = $request->validated();
+
         $artist = Artist::find($id);
-        $artist->update($request->all());
+        $artist->update($data);
         return response()->json($artist);
     }
 

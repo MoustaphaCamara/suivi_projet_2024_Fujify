@@ -16,13 +16,14 @@ class SongController extends Controller
         return Song::all();
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(SongController $request): JsonResponse
     {
+        $data = $request->safe()->toArray();
 
         $song = Song::create([
-            'title' => $request->title,
-            'duration'=>$request->duration,
-            'description' => $request->description,
+            'title' => $data['title'],
+            'duration'=>$data['duration'],
+            'description' => $data['description'],
             'artist_id' => 1,
         ]);
         return response()->json(['success' => true, 'song' => $song]);
@@ -36,8 +37,10 @@ class SongController extends Controller
 
     public function update(SongRequest $request, string $id): JsonResponse
     {
+        $data = $request->validated();
+
         $song = Song::find($id);
-        $song->update($request->all());
+        $song->update($data);
         return response()->json($song);
     }
 
