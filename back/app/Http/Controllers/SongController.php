@@ -6,7 +6,7 @@ use App\Http\Requests\SongRequest;
 use App\Models\Song;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class SongController extends Controller
 {
@@ -16,7 +16,7 @@ class SongController extends Controller
         return Song::all();
     }
 
-    public function store(SongController $request): JsonResponse
+    public function store(SongRequest $request): JsonResponse
     {
         $data = $request->safe()->toArray();
 
@@ -26,7 +26,7 @@ class SongController extends Controller
             'description' => $data['description'],
             'artist_id' => 1,
         ]);
-        return response()->json(['success' => true, 'song' => $song]);
+        return response()->json($song, Response::HTTP_CREATED);
     }
 
     public function show(string $id): JsonResponse
@@ -41,6 +41,7 @@ class SongController extends Controller
 
         $song = Song::find($id);
         $song->update($data);
+
         return response()->json($song);
     }
 
@@ -48,6 +49,7 @@ class SongController extends Controller
     {
         $song = Song::find($id);
         $song->delete();
+
         return response()->json(null, 204);
     }
 }
