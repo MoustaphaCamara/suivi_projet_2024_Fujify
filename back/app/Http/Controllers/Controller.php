@@ -11,7 +11,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    public function cache()
+    public function cache(): void
     {
         Cache::put('key', 'value', $minutes = 60);
 
@@ -22,7 +22,7 @@ class Controller extends BaseController
 
             Cache::put('key', $value, $minutes = 60);
         }
-        
+
         Cache::forget('key');
 
         Cache::flush();

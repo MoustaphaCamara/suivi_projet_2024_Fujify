@@ -6,8 +6,8 @@ use App\Http\Requests\AnimeRequest;
 use App\Models\Anime;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Cache;
+use Symfony\Component\HttpFoundation\Response;
 
 class AnimeController extends Controller
 {
@@ -47,7 +47,7 @@ class AnimeController extends Controller
     }
 
 
-    public function getArtistDetails($animeId): JsonResponse
+    public function getAnimeDetails($animeId): JsonResponse
     {
         $cacheKey = "anime_details_{$animeId}";
 
