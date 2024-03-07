@@ -34,6 +34,7 @@ class AlbumCoverController extends Controller
         AlbumCover::create([
             'image' => $public_url
         ]);
+
         return response()->json([
             'message' => 'uploaded successfully',
             $response
@@ -44,7 +45,7 @@ class AlbumCoverController extends Controller
     public function show(string $id): string
     {
         $albumCover = AlbumCover::find($id);
-        return '<img src="' . $albumCover->image . '" />';
+        return sprintf('<img src="%s" alt="cover-image" />', $albumCover->image);
     }
 
     public function destroy(string $id): JsonResponse
