@@ -6,6 +6,7 @@ use App\Http\Requests\AlbumCoverRequest;
 use App\Models\AlbumCover;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 class AlbumCoverController extends Controller
@@ -17,12 +18,16 @@ class AlbumCoverController extends Controller
 
     public function store(AlbumCoverRequest $request): JsonResponse
     {
+        $uploadFolder = 'albums';
         $data = $request->validated();
+        $image = $data['image'];
+        $image_path = $image->store($uploadFolder, 'public');
 
-        $data['image'] = $request->file('image')->store('image');
-        $data = AlbumCover::create($data);
-
-        return response()->json($data);
+        $uploaded_response = array(
+            'image_name' => basename($image_path),
+            'image_url' => Storage::disk('public')->url($image_path)
+        );
+        return response()->json(['message' => 'uploaded successfully', $uploaded_response], 200, $uploaded_response);
     }
 
     public function show(string $id): JsonResponse
