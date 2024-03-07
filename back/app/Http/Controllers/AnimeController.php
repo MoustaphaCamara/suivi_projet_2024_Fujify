@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AnimeRequest;
 use App\Models\Anime;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class AnimeController extends Controller
@@ -15,13 +15,16 @@ class AnimeController extends Controller
         return Anime::all();
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(AnimeRequest $request): JsonResponse
     {
+        // retrieve only valid data from the input
+        $data = $request->safe()->toArray();
+
         $anime = Anime::create([
-            'title' => $request->title,
-            'category'=>$request->category,
-            'description'=>$request->description,
-            'cover_image'=>$request->cover_image,
+            'title' => $data['title'],
+            'category' => $data['category'],
+            'description' => $data['description'],
+            'cover_image' => $data['cover_image'],
         ]);
         return response()->json($anime, Response::HTTP_CREATED);
     }
@@ -32,10 +35,13 @@ class AnimeController extends Controller
         return response()->json($anime);
     }
 
-    public function update(Request $request, string $id): JsonResponse
+    public function update(AnimeRequest $request, string $id): JsonResponse
     {
+        $data = $request->validated();
+
         $anime = Anime::find($id);
-        $anime->update($request->all());
+        $anime->update($data);
+
         return response()->json($anime);
     }
 
@@ -43,6 +49,7 @@ class AnimeController extends Controller
     {
         $anime = Anime::find($id);
         $anime->delete();
+
         return response()->json(null, 204);
     }
 }
