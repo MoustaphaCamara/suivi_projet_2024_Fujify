@@ -7,6 +7,7 @@ use App\Models\Anime;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 
 class AnimeController extends Controller
 {
@@ -43,6 +44,21 @@ class AnimeController extends Controller
         $anime->update($data);
 
         return response()->json($anime);
+    }
+
+
+    public function getArtisDetails($animeId)
+    {
+        $cacheKey = "anime_details_{$animeId}";
+
+        $animeDetails = Cache::get($cacheKey);
+
+        if ($animeDetails === null) {
+            $animeDetails = Anime::find($animeId);
+            Cache::put($cacheKey, $animeDetails, $minutes = 60);
+        }
+
+        return response()->json($animeDetails);
     }
 
     public function destroy(string $id): JsonResponse

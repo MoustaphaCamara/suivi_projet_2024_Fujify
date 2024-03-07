@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnimeController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\SongController;
 use Illuminate\Http\Request;
@@ -24,3 +25,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('animes', AnimeController::class);
 Route::apiResource('artists', ArtistController::class);
 Route::apiResource('songs', SongController::class);
+Route::get('/create-cache', [Controller::class, 'cache']);

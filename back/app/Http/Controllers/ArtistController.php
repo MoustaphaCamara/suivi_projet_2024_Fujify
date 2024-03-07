@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 
 class ArtistController extends Controller
 {
@@ -42,6 +43,22 @@ class ArtistController extends Controller
         $artist->update($data);
         return response()->json($artist);
     }
+
+
+    public function getArtisDetails($artisId)
+    {
+        $cacheKey = "artis_details_{$artisId}";
+
+        $artisDetails = Cache::get($cacheKey);
+
+        if ($artisDetails === null) {
+            $artisDetails = Artist::find($artisId);
+            Cache::put($cacheKey, $artisDetails, $minutes = 60);
+        }
+
+        return response()->json($artisDetails);
+    }
+
 
     public function destroy(string $id): JsonResponse
     {

@@ -24,7 +24,7 @@ class ArtistRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'alias' => ['nullable', 'string', 'max:255'],
-            'birth_date' => ['nullable', 'date'],
+            'birth_date' => ['nullable', 'date_format:Y-m-d'],
             'label' => ['nullable', 'string', 'max:255'],
         ];
     }
