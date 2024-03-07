@@ -13,7 +13,7 @@ Cette API REST a été codée avec Laravel 10. On peut y retrouver les différen
 - CRUD (voir PR Controllers) : Create, Read, Update & Delete des différents Models créés
 - Gestion de
   fichiers : [Ajout d'images dans le storage](https://github.com/MoustaphaCamara/suivi_projet_2024_Fujify/pull/5/files)
-- Cache :  - [Ajout de cache](https://github.com/MoustaphaCamara/suivi_projet_2024_Fujify/pull/8/files)
+- Cache : [Ajout de cache](https://github.com/MoustaphaCamara/suivi_projet_2024_Fujify/pull/8/files)
 
 ## Postman
 
