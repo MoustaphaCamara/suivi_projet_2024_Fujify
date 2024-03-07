@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AlbumCoverRequest;
 use App\Models\AlbumCover;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class AlbumCoverController extends Controller
@@ -15,28 +15,28 @@ class AlbumCoverController extends Controller
         return AlbumCover::all();
     }
 
-    public function store(AlbumCoverRequest $request): Response
+    public function store(AlbumCoverRequest $request): JsonResponse
     {
         $data = $request->validated();
 
-//        $data['image'] = $request->file('image')->store('image');
-//        $data = AlbumCover::create($data);
+        $data['image'] = $request->file('image')->store('image');
+        $data = AlbumCover::create($data);
 
-        Storage::disk('public')->put('image', $data['image']);
-        return response($data, Response::HTTP_CREATED);
+        return response()->json($data);
     }
 
-    public function show(string $id): string
+    public function show(string $id): JsonResponse
     {
         $albumCover = AlbumCover::find($id);
-        $exists = Storage::disk('public')->exists('image/' . $albumCover->image);
-        dd($exists);
-        $imagePath = storage_path() . '/app/' . $albumCover->image;
-        return '<img src="' . $imagePath . '" />';
+        return response()->json($albumCover);
+
     }
 
-    public function destroy(AlbumCover $albumCover)
+    public function destroy(string $id): JsonResponse
     {
-        //
+        $albumCover = AlbumCover::find($id);
+        $albumCover->delete();
+
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }
