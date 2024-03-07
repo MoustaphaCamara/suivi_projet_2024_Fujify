@@ -19,22 +19,32 @@ class AlbumCoverController extends Controller
     public function store(AlbumCoverRequest $request): JsonResponse
     {
         $uploadFolder = 'albums';
+
         $data = $request->validated();
         $image = $data['image'];
         $image_path = $image->store($uploadFolder, 'public');
 
-        $uploaded_response = array(
+        $public_url = Storage::disk('public')->url($image_path);
+
+        $response = [
             'image_name' => basename($image_path),
-            'image_url' => Storage::disk('public')->url($image_path)
-        );
-        return response()->json(['message' => 'uploaded successfully', $uploaded_response], 200, $uploaded_response);
+            'image_url' => $public_url
+        ];
+
+        AlbumCover::create([
+            'image' => $public_url
+        ]);
+        return response()->json([
+            'message' => 'uploaded successfully',
+            $response
+        ],
+            Response::HTTP_OK);
     }
 
-    public function show(string $id): JsonResponse
+    public function show(string $id): string
     {
         $albumCover = AlbumCover::find($id);
-        return response()->json($albumCover);
-
+        return '<img src="' . $albumCover->image . '" />';
     }
 
     public function destroy(string $id): JsonResponse
