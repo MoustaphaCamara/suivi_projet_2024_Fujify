@@ -2,7 +2,7 @@
 
 # REST API - Fujify
 
-Cette API REST a été codée avec Laravel 10. On peut y retrouver les différents éléments vus en cours :
+Cette API REST a été codée avec Laravel 10. Vous pourrez y retrouver les éléments suivants :
 
 - Models - voir PR Controllers
 - Controllers : [pt1](https://github.com/MoustaphaCamara/suivi_projet_2024_Fujify/pull/1/files) - [pt2](https://github.com/MoustaphaCamara/suivi_projet_2024_Fujify/pull/2/files)
