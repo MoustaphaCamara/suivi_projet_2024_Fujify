@@ -32,9 +32,12 @@ const ButtonFJ = (props) => {
         }
     }, [color]);
     return (
-        <button disabled={isDisabled} className={color}>
-            {props.content}
-        </button>
+        <>
+            <button disabled={isDisabled} className={`${color} ${props.icon && 'flex gap-2 items-center'}`}>
+                {props.icon}
+                {props.content}
+            </button>
+        </>
     );
 };
 
