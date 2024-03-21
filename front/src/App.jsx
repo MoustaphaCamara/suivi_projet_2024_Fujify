@@ -1,30 +1,21 @@
 import { useState } from 'react'
-import fujylogo from './assets/FUJI-LOGO-2.jpg';
+
 import './App.css'
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import HomePage from "./pages/HomePage.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="" target="_blank">
-          <img src={fujylogo} className="logo" alt="Vite logo" />
-        </a>
-      </div>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    return (
+        <>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<HomePage/>}/>
+                </Routes>
+            </BrowserRouter>
+        </>
+    )
 }
 
 export default App
