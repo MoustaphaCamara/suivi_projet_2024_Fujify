@@ -6,7 +6,7 @@ export default {
     theme: {
         extend: {},
         colors: {
-            'title': '#e11d48',
+            'text_title': '#e11d48',
             'dark_lavender': '#7D6774',
             'light_gray':'#A6A6A6'
 
