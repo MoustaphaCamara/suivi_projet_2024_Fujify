@@ -6,7 +6,7 @@ Ce dépôt contient le back & le front de notre projet.
 
 Veuillez vous reférer à ces repositories pour trouver leur readme respectifs.
 
-
+To start the project: npm run dev
 ## Contributors
 
 - **[Adelia Fathipour](https://github.com/SajedehAdelia)**
@@ -17,3 +17,4 @@ Veuillez vous reférer à ces repositories pour trouver leur readme respectifs.
 PHP 8.1+ & Laravel 10.0+
 
 Code Editor (VSCode, JetBrains IDEs...)
+  
